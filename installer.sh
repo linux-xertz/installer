@@ -59,13 +59,9 @@ pacstrap /mnt base base-devel bc linux-firmware vim nano git networkmanager grub
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Kernel installation
-arch-chroot /mnt git clone https://github.com/linux-xertz/xertz-kernel
-arch-chroot /mnt make -I /xertz-kernel/Makefile
-arch-chroot /mnt make modules_install -I /xertz-kernel/Makefile
-arch-chroot /mnt make install -I /xertz-kernel/Makefile
-arch-chroot /mnt cp -v arch/x86/boot/bzImage /boot/vmlinuz-5.15.11-linux-xertz
-arch-chroot /mnt mkinitcpio -k 5.15.11 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.15.11-linux-xertz
-arch-chroot /mnt cp System.map /boot/System.map-5.15.11-linux-xertz
+mv .part2.sh /mnt
+arch-chroot /mnt chmod +x .part2.sh
+arch-chroot /mnt ./part2.sh
 
 # Network setup
 # arch-chroot /mnt echo $HOSTNAME > /etc/hostname
