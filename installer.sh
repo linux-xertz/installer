@@ -57,31 +57,30 @@ mount /dev/"$DRIVE"3 /mnt
 pacstrap /mnt base base-devel bc linux-firmware vim nano git networkmanager grub efibootmgr 
 
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt
 
 # Kernel installation
-git clone https://github.com/linux-xertz/xertz-kernel
-cd kernel
-make
-make modules_install
-make install
-cp -v arch/x86/boot/bzimage /boot/vmlinuz-5.15.11-linux-xertz
-mkinitcpio -k 5.15.11 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.15.11-linux-xertz
-cp System.map /boot/System.map-5.15.11-linux-xertz
+chroot /mnt git clone https://github.com/linux-xertz/xertz-kernel
+chroot /mnt cd kernel
+chroot /mnt make
+chroot /mnt make modules_install
+chroot /mnt make install
+chroot /mnt cp -v arch/x86/boot/bzimage /boot/vmlinuz-5.15.11-linux-xertz
+chroot /mnt mkinitcpio -k 5.15.11 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.15.11-linux-xertz
+chroot /mnt cp System.map /boot/System.map-5.15.11-linux-xertz
 
 # Network setup
-echo $HOSTNAME > /etc/hostname
+chroot /mnt echo $HOSTNAME > /etc/hostname
 
 
 # Grub setup
-mkdir /boot/efi
-mount /dev/"$DRIVE"1 /boot/efi
-grub-install --target=x86_64-efi --bootloader-id=linux-xertz --efi-directory=/boot/efi
-grub-mkconfig -o /boot/grub/grub.cfg
+chroot /mnt mkdir /boot/efi
+chroot /mnt mount /dev/"$DRIVE"1 /boot/efi
+chroot /mnt grub-install --target=x86_64-efi --bootloader-id=linux-xertz --efi-directory=/boot/efi
+chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 
 # Post setup
-pacman -S lightdm lightdm-gtk-greeter xorg exo garcon thunar thunar-volman tumbler xfce4-appfinder xfce4-panel xfce4-power-manager xfce4-session xfce4-settings xfce4-terminal xfconf xfdesktop xfwm4 xfwm4-themes
-systemctl enable lightdm
-systemctl enable NetworkManager
+chroot /mnt pacman -S lightdm lightdm-gtk-greeter xorg exo garcon thunar thunar-volman tumbler xfce4-appfinder xfce4-panel xfce4-power-manager xfce4-session xfce4-settings xfce4-terminal xfconf xfdesktop xfwm4 xfwm4-themes
+chroot /mnt systemctl enable lightdm
+chroot /mntsystemctl enable NetworkManager
 
