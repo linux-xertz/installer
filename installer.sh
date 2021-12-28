@@ -82,5 +82,5 @@ chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 # Post setup
 chroot /mnt pacman -S lightdm lightdm-gtk-greeter xorg exo garcon thunar thunar-volman tumbler xfce4-appfinder xfce4-panel xfce4-power-manager xfce4-session xfce4-settings xfce4-terminal xfconf xfdesktop xfwm4 xfwm4-themes
 chroot /mnt systemctl enable lightdm
-chroot /mntsystemctl enable NetworkManager
+chroot /mnt systemctl enable NetworkManager
 
