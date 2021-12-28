@@ -61,12 +61,12 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # Kernel installation
 arch-chroot /mnt git clone https://github.com/linux-xertz/xertz-kernel
 arch-chroot /mnt cd xertz-kernel
-arch-chroot /mnt make
-arch-chroot /mnt make modules_install
-arch-chroot /mnt make install
-arch-chroot /mnt cp -v arch/x86/boot/bzimage /boot/vmlinuz-5.15.11-linux-xertz
+arch-chroot /mnt cd xertz-kernel && make
+arch-chroot /mnt cd xertz-kernel && make modules_install
+arch-chroot /mnt cd xertz-kernel && make install
+arch-chroot /mnt cd xertz-kernel && cp -v arch/x86/boot/bzimage /boot/vmlinuz-5.15.11-linux-xertz
 arch-chroot /mnt mkinitcpio -k 5.15.11 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.15.11-linux-xertz
-arch-chroot /mnt cp System.map /boot/System.map-5.15.11-linux-xertz
+arch-chroot /mnt cd xertz-kernel && cp System.map /boot/System.map-5.15.11-linux-xertz
 
 # Network setup
 # arch-chroot /mnt echo $HOSTNAME > /etc/hostname
