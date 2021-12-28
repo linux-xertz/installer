@@ -12,7 +12,7 @@ echo "This operating system was made for fun by some kid but if enough people co
 sleep 4s
 echo
 echo "Enough of me flabbing my gums through your light up metal box let's get into it"
-sleep 1s
+sleep 3s
 clear
 
 # Choosing correct disk
@@ -34,13 +34,18 @@ fi
 
 # Following through
 wipefs -a /dev/$DRIVE
+sleep 1s
 parted /dev/$DRIVE mklabel gpt
+sleep 1s
 parted /dev/$DRIVE unit mib
+sleep 1s
 parted /dev/$DRIVE mkpart primary 1 512
+sleep 1s
 parted /dev/$DRIVE name 1 boot
+sleep 1s
 parted /dev/$DRIVE mkpart primary 512 4227
 parted /dev/$DRIVE name 2 swap
-parted /dev/$DRIVE mkpart primary 4227 -1
+parted /dev/$DRIVE mkpart primary 4227 100%
 parted /dev/$DRIVE name 3 filesystem
 mkfs.fat -F32 /dev/"$DRIVE"1
 mkswap /dev/"$DRIVE"2
