@@ -61,7 +61,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # Kernel installation
 mv .part2.sh /mnt
 arch-chroot /mnt chmod +x .part2.sh
-arch-chroot /mnt ./part2.sh
+arch-chroot /mnt ./.part2.sh
 
 # Network setup
 # arch-chroot /mnt echo $HOSTNAME > /etc/hostname
