@@ -57,7 +57,8 @@ mount /dev/"$DRIVE"3 /mnt
 pacstrap /mnt base base-devel bc linux-firmware vim nano git networkmanager grub efibootmgr 
 
 genfstab -U /mnt >> /mnt/etc/fstab
-
+mkdir /mnt/boot/efi
+mount /dev/"$DRIVE"1 /mnt/boot/efi
 # Kernel installation
 mv .part2.sh /mnt
 arch-chroot /mnt chmod +x .part2.sh
@@ -65,17 +66,3 @@ arch-chroot /mnt ./.part2.sh
 
 # Network setup
 # arch-chroot /mnt echo $HOSTNAME > /etc/hostname
-
-
-# Grub setup
-arch-chroot /mnt mkdir /boot/efi
-mount /dev/"$DRIVE"1 /mnt/boot/efi
-arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=linux-xertz --efi-directory=/boot/efi
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
-
-
-# Post setup
-arch-chroot /mnt pacman -S lightdm lightdm-gtk-greeter xorg exo garcon thunar thunar-volman tumbler xfce4-appfinder xfce4-panel xfce4-power-manager xfce4-session xfce4-settings xfce4-terminal xfconf xfdesktop xfwm4 xfwm4-themes
-arch-chroot /mnt systemctl enable lightdm
-arch-chroot /mnt systemctl enable NetworkManager
-
