@@ -60,7 +60,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Kernel installation
 arch-chroot /mnt git clone https://github.com/linux-xertz/xertz-kernel
-arch-chroot /mnt cd kernel
+arch-chroot /mnt cd xertz-kernel
 arch-chroot /mnt make
 arch-chroot /mnt make modules_install
 arch-chroot /mnt make install
